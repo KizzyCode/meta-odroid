@@ -12,21 +12,6 @@ REQUIRED_DISTRO_FEATURES = "x11"
 
 MALI ?= ""
 
-XSERVER_OPENGL ?= " \
-    xf86-video-modesetting \
-    xserver-xorg-extension-glx \
-"
-
-XSERVER = " \
-    xserver-xorg \
-    xserver-xorg-module-libint10 \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', '${XSERVER_OPENGL}', 'xf86-video-fbdev', d)} \
-    xf86-video-armsoc \
-    xf86-input-evdev \
-    xf86-input-mouse \
-    xf86-input-keyboard \
-"
-
 GTS = "\
      gstreamer1.0 \
      gstreamer1.0-plugins-good \
@@ -43,20 +28,12 @@ CORE_IMAGE_BASE_INSTALL += " \
     ${MALI} \
     ${GTS} \
     ${QT5} \
+    ${@bb.utils.contains('MACHINE_FEATURES', 'mali', '${MALI} ', '', d)} \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', '${VIRTUAL-RUNTIME_mesa}', '', d)} \
     xserver-common \
-    xorg-minimal-fonts \
-    xserver-xorg-utils \
     kernel-modules \
-    openbox \
-    mesa \
     ttf-dejavu-sans \
     ttf-dejavu-sans-mono \
-"
-
-CORE_IMAGE_BASE_INSTALL += " \
-    x11perf \
-    xvideo-tests \
-    ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'mesa-demos', '', d)} \
 "
 
 COMPATIBLE_MACHINE = "(odroid-xu3|odroid-xu4|odroid-xu3-lite)"
