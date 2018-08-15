@@ -1,9 +1,9 @@
 require kernel-module-mali-midgard.inc
 
-BRANCH="TX011-SW-99002-r25p0-01rel0"
+BRANCH="TX011-SW-99002-r26p0-01rel0"
 SRC_URI = "git://github.com/akuster/mali-kernel-modules.git;branch=${BRANCH}"
 
-SRCREV = "f3a3b47b126d7cfc119d2a1ead316fd5ac09155a"
+SRCREV = "3baf20262a3ddb413b4ed5ea7766e337614706d4"
 
 inherit module
 
