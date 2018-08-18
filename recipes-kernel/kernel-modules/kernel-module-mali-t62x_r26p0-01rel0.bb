@@ -3,7 +3,7 @@ require kernel-module-mali-midgard.inc
 BRANCH="TX011-SW-99002-r26p0-01rel0"
 SRC_URI = "git://github.com/akuster/mali-kernel-modules.git;branch=${BRANCH}"
 
-SRCREV = "3baf20262a3ddb413b4ed5ea7766e337614706d4"
+SRCREV = "d8ca6433357b4bde4b12cc7715ac811c2c92d4e1"
 
 inherit module
 
@@ -14,7 +14,6 @@ python() {
 
 	config = ["CONFIG_MALI_MIDGARD=m",
 		  "CONFIG_MALI_GATOR_SUPPORT=y",
-		  "CONFIG_MALI_MIDGARD_DVFS=y",
 		  "CONFIG_MALI_EXPERT=y",
 		  "CONFIG_MALI_PLATFORM_FAKE=y",
 		  "CONFIG_MALI_PLATFORM_THIRDPARTY=y",
