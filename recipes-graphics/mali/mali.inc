@@ -1,12 +1,12 @@
 LICENSE = "Proprietary"
 SECTION = "libs"
 
-DEPENDS += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", "virtual/mesa", " ", d)}"
+DEPENDS += "${@bb.utils.contains("DISTRO_FEATURES", "opengl", "virtual/mesa", " ", d)}"
+DEPENDS += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", "virtual/mesa wayland", " ", d)}"
 DEPENDS += "${@bb.utils.contains("DISTRO_FEATURES", "x11", " virtual/libx11 libxext libdrm libxfixes libxdamage", " ", d)}"
 
-#PROVIDES += "virtual/egl virtual/libgles1 virtual/libgles2 virtual/libgbm"
-PROVIDES += "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'virtual/egl virtual/libgles1 virtual/libgles2 virtual/libgbm', '', d)}"
-PROVIDES += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", " virtual/libwayland-egl", " ", d)}"
+PROVIDES += "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'virtual/egl virtual/libgles1 virtual/libgles2', '', d)}"
+PROVIDES += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", "virtual/libgbm virtual/libwayland-egl", " ", d)}"
 
 INSANE_SKIP_${PN} = "ldflags dev-so"
 
@@ -26,9 +26,12 @@ do_compile[noexec] = "1"
 FILES_SOLIBSDEV = ""
 FILES_${PN} += "${libdir}/*.so"
 
-RREPLACES_${PN} += "libegl libegl1 libgles1 libgles2 libglesv2-2 libgbm"
-RPROVIDES_${PN} += "libegl libegl1 libgles1 libgles2 libglesv2-2 libgbm"
-RCONFLICTS_${PN} += "libegl libegl1 libgles1 libgles2 libglesv2-2 libgbm"
+RREPLACES_${PN} += "libegl libegl1 libgles1 libgles2 libglesv2-2"
+RREPLACE_${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", "libgbm libwayland-egl", " ", d)}"
+RPROVIDES_${PN} += "libegl libegl1 libgles1 libgles2 libglesv2-2 "
+RPROVIDES_${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", "libgbm libwayland-egl", " ", d)}"
+RCONFLICTS_${PN} += "libegl libegl1 libgles1 libgles2 libglesv2-2"
+RCONFLICTS_${PN} += "${@bb.utils.contains("DISTRO_FEATURES", "wayland", "libgbm libwayland-egl", " ", d)}"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 PACKAGES = "${PN} ${PN}-dev"

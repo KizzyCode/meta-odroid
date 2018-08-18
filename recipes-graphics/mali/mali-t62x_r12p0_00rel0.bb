@@ -5,8 +5,6 @@ LIC_FILES_CHKSUM = "file://END_USER_LICENCE_AGREEMENT.txt;md5=3918cc9836ad038c5a
 
 TYPE = "mali-t62x"
 
-DEPENDS_append = " ${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'virtual/mesa', '', d)}"
-
 BRANCH = "mali-t62x_r12p0_00rel0"
 SRCREV = "595cb959b48ccc1b9154fac5988191a1c3fffe3b"
 SRC_URI = "git://github.com/akuster/arm-mali.git;brancg=${BRANCH}"
@@ -16,11 +14,16 @@ S = "${WORKDIR}/git"
 do_install () {
         # Create MALI manifest
         install -m 755 -d ${D}/${libdir}
+
         if [ "${USE_X11}" = "yes" ]; then
 		install ${S}/${TYPE}/x11/libmali.so ${D}/${libdir}
-        elif [ "${USE_WL}" = "yes" ]; then
+	fi
+
+        if [ "${USE_WL}" = "yes" ]; then
 		install ${S}/${TYPE}/wayland/libmali.so ${D}/${libdir}
-        else
+	fi
+
+        if [ "${USE_DFB}" = "yes" ]; then
 		install ${S}/${TYPE}/fbdev/libmali.so ${D}/${libdir}
         fi
 
@@ -38,6 +41,7 @@ do_install () {
 		ln -sf libgbm.so.1 ${D}/${libdir}/libgbm.so
 		ln -sf libmali.so ${D}/${libdir}/libwayland-egl.so.1
 		ln -sf libwayland-egl.so.1 ${D}/${libdir}/libwayland-egl.so
+		ln -sf libwayland-egl.so.1 ${D}/${libdir}/libwayland-egl.so.1.0.0
 	fi
 }
 
