@@ -21,7 +21,6 @@ IMAGE_INSTALL = " \
     kernel-modules \
     odroid-edid \
     udev-extraconf \
-    metacity \
 "
 
 CORE_IMAGE_BASE_INSTALL += " \
