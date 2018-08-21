@@ -1,6 +1,6 @@
-DEPENDS_append = " mali-t62x"
+DEPENDS_append = " ${PREFERRED_PROVIDER_virtual/gpu}"
 
-WAYLAND_RDEPENDS ?= "mali-t62x"
+WAYLAND_RDEPENDS ?= "${PREFERRED_PROVIDER_virtual/gpu}"
 RDEPENDS_${PN} = "${WAYLAND_RDEPENDS}"
 RDEPENDS_gtk3-immodule-ti-er = "${WAYLAND_RDEPENDS}"
 RDEPENDS_gtk3-printbackend-file = "${WAYLAND_RDEPENDS}"
