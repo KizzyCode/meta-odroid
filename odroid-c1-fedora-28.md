@@ -156,5 +156,6 @@ make
 
 ## Install it to your SD-card
 ```sh
-sudo dd if=sd_fuse/u-boot.bin of=/dev/sdX oflag=dsync bs=512 seek=64
+cd sd_fuse
+sudo ./sd_fusing.sh /dev/sdX
 ```
